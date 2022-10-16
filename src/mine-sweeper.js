@@ -1,4 +1,4 @@
-const { NotImplementedError } = require('../extensions/index.js');
+const { NotImplementedError } = require("../extensions/index.js");
 
 /**
  * In the popular Minesweeper game you have a board with some mines and those cells
@@ -23,11 +23,80 @@ const { NotImplementedError } = require('../extensions/index.js');
  *  [1, 1, 1]
  * ]
  */
-function minesweeper(/* matrix */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+function minesweeper(matrix) {
+  return matrix.map((e, i, arr) => {
+    return e.map((elem, ind, array) => {
+      let count = 0;
+      if (ind === 0) {
+        if (i === 0) {
+          if (array[1]) count++;
+          if (arr[1][0]) count++;
+          if (arr[1][1]) count++;
+        }
+        if (i > 0 && i < arr.length - 1) {
+          if (array[1]) count++;
+          if (arr[i - 1][0]) {
+            console.log(e[i - 1][0]);
+            count++;
+          }
+          if (arr[i - 1][1]) count++;
+          if (arr[i + 1][1]) count++;
+          if (arr[i + 1][0]) count++;
+        }
+        if (i === arr.length - 1) {
+          if (array[1]) count++;
+          if (arr[arr.length - 2][0]) count++;
+          if (arr[arr.length - 2][1]) count++;
+        }
+      } else if (ind > 0 && ind < array.length - 1) {
+        if (i === 0) {
+          if (array[ind - 1]) count++;
+          if (array[ind + 1]) count++;
+          if (arr[1][ind]) count++;
+          if (arr[1][ind + 1]) count++;
+          if (arr[1][ind - 1]) count++;
+        }
+        if (i > 0 && i < arr.length - 1) {
+          if (array[ind - 1]) count++;
+          if (array[ind + 1]) count++;
+          if (arr[i - 1][ind]) count++;
+          if (arr[i - 1][ind - 1]) count++;
+          if (arr[i - 1][ind + 1]) count++;
+          if (arr[i + 1][ind]) count++;
+          if (arr[i + 1][ind - 1]) count++;
+          if (arr[i + 1][ind + 1]) count++;
+        }
+        if (i === arr.length - 1) {
+          if (array[ind - 1]) count++;
+          if (array[ind + 1]) count++;
+          if (arr[arr.length - 2][ind]) count++;
+          if (arr[arr.length - 2][ind + 1]) count++;
+          if (arr[arr.length - 2][ind - 1]) count++;
+        }
+      } else if (ind === array.length - 1) {
+        if (i === arr.length - 1) {
+          if (array[ind - 1]) count++;
+          if (arr[arr.length - 2][array.length - 1]) count++;
+          if (arr[arr.length - 2][array.length - 2]) count++;
+        }
+        if (i > 0 && i < arr.length - 1) {
+          if (array[ind - 1]) count++;
+          if (arr[i - 1][array.length - 1]) count++;
+          if (arr[i - 1][array.length - 2]) count++;
+          if (arr[i + 1][array.length - 1]) count++;
+          if (arr[i + 1][array.length - 2]) count++;
+        }
+        if (i === 0) {
+          if (array[ind - 1]) count++;
+          if (arr[1][array.length - 1]) count++;
+          if (arr[1][array.length - 2]) count++;
+        }
+      }
+      return count;
+    });
+  });
 }
 
 module.exports = {
-  minesweeper
+  minesweeper,
 };
